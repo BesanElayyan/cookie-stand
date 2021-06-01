@@ -4,138 +4,131 @@ let workingHours = ['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3p
 
 
 function randomVal(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
-  }
+    return Math.floor(Math.random() * (max - min + 1) + min); 
+}
 
-  /*let cont = document.getElementById('container');
+  let cont = document.getElementById('container');
   let table = document.createElement('table');
-  function headerRow(){
-    let headerRow = document.createElement('tr');
-    table.appendChild(headerRow);
-    let th = document.createElement('th');
-    headerRow.appendChild(th);
-    th.textContent= ('6am');*/
-  }
+  cont.appendChild(table);
 
-  // Lab07
 
-function SalmonShops(locName,min,max,avg,custPerHour,cookiesPerH,total,/*calcRandomCust,calcRandomCookies*/){
+let arrOfObjects = [];
+function SalmonShops(locName,min,max,avg){
     this.locName = locName;
     this.min = min;
     this.max = max;
     this.avg = avg;
-    this.custPerHour = custPerHour;
-    this.cookiesPerH = cookiesPerH;
-    this.total = total;
-    /*this.calcRandomCust= calcRandomCust;
-    this.calcRandomCookies = calcRandomCookies;*/
-    
+    this.custPerHour = [];
+    this.cookiesPerH = [];
+    this.total = 0;
+   arrOfObjects.push(this);
+
+
 }
+
  //prototypes
- SalmonShops.prototype.calcRandomCust= function (){
-    for(let i = 0; i< workingHours.length;i++){
+  SalmonShops.prototype.calcRandomCust= function (){
+    for(let i = 0; i < workingHours.length;i++){
         this.custPerHour.push(randomVal(this.min,this.max));
   }  
- }
+}
 
  SalmonShops.prototype.calcRandomCookies= function(){
     for(let i = 0 ; i < workingHours.length; i++){
         this.cookiesPerH.push(this.custPerHour[i] * Math.ceil(this.avg));
-        this.total = this.total + this.cookiesPerH[i];
+        this.total += this.cookiesPerH[i];
+
 
     }
  }
 
- SalmonShops.prototype.render= function(){
-    let locName = document.createElement('h2');
-    cont.appendChild(locName);
-    locName.textContent = this.locName;
 
-    let unList = document.createElement('ul');   
-    cont.appendChild(unList);
+ function getHeaderRow(){
+    let headerRow = document.createElement('tr');
+    table.appendChild(headerRow);
+    let emptyCell = document.createElement('th');
+    headerRow.appendChild(emptyCell);
 
-    for(let i = 0 ; i < workingHours.length; i++){
-        let liItems = document.createElement('li');
-        unList.appendChild(liItems);
-        liItems.textContent = `${workingHours[i]} : ${this.cookiesPerH[i]} cookies`;
+    for(let i = 0; i< workingHours.length; i++){
+        let th = document.createElement('th');
+        headerRow.appendChild(th);
+        th.textContent = workingHours[i];
     }
 
-    let dayTotal = document.createElement('li');
-    unList.appendChild(dayTotal);
-    dayTotal.textContent = `Total : ${this.total} cookies`;
-
-    /*let headerRow = document.createElement('tr');
-    table.appendChild(headerRow);
-    let th = document.createElement('th');
-    headerRow.appendChild(th);
-    th.textContent= ('6am');
-    let th2 = document.createElement('th');
-    headerRow.appendChild(th2);
-    th.textContent= ('7am');
-    let th3 = document.createElement('th');
-    headerRow.appendChild(th3);
-    th.textContent= ('8am');
-    let th3 = document.createElement('th');
-    headerRow.appendChild(th3);
-    th.textContent= ('9m');
-    let th4 = document.createElement('th');
-    headerRow.appendChild(th4);
-    th.textContent= ('10am');
-    let th5 = document.createElement('th');
-    headerRow.appendChild(th5);
-    th.textContent= ('11am');
-    let th6 = document.createElement('th');
-    headerRow.appendChild(th6);
-    th.textContent= ('12pm');
-    let th7 = document.createElement('th');
-    headerRow.appendChild(th7);
-    th.textContent= ('1pm');
-    let th8 = document.createElement('th');
-    headerRow.appendChild(th8);
-    th.textContent= ('2pm');
-    let th9 = document.createElement('th');
-    headerRow.appendChild(th9);
-    th.textContent= ('3pm');
-    let th10 = document.createElement('th');
-    headerRow.appendChild(th10);
-    th.textContent= ('4pm');
-    let th11 = document.createElement('th');
-    headerRow.appendChild(th1);
-    th.textContent= ('5pm');
-    let th12= document.createElement('th');
-    headerRow.appendChild(th12);
-    th.textContent= ('6pm');
-    let th13 = document.createElement('th');
-    headerRow.appendChild(th13);
-    th.textContent= ('7pm');
-   
-   
-    let headerRow = document.createElement('tr');
-    table.appendChild(headerRow);*/
-
-    
+    let dailyLoc = document.createElement('th')
+    headerRow.appendChild(dailyLoc);
+    dailyLoc.textContent = 'DailyLocTotal';
 }
 
 
+SalmonShops.prototype.render= function(){
+    let tr = document.createElement('tr');
+    table.appendChild(tr);
+    let firstCell = document.createElement('th');
+    tr.appendChild(firstCell);
+    firstCell.textContent = this.locName;
+    for(let i= 0; i < this.cookiesPerH.length; i++){
+        let td = document.createElement('td');
+        tr.appendChild(td);
+        td.textContent = this.cookiesPerH[i];
+    }
+
+    let lastCell = document.createElement('th');
+    tr.appendChild(lastCell);
+    lastCell.textContent = this.total
+}
+
 
 // instences
-let seattle = new SalmonShops('Seattle', 23, 65, 6.3, [], [], 0);
-console.log(seattle);
+let seattle = new SalmonShops('Seattle', 23, 65, 6.3);
+let Tokyo = new SalmonShops('Tokyo', 3, 24 ,1.2);
+let Dubai = new SalmonShops('Dubai', 11, 38, 3.7);
+let Paris = new SalmonShops('Paris', 11, 38, 2.3);
+let Lima = new SalmonShops('Lima', 2, 16, 4.6);
 
-let Tokyo = new SalmonShops('Tokyo', 3, 24 ,1.2 ,[] , [], 0);
-console.log(Tokyo);
-
-let Dubai = new SalmonShops('Dubai', 11, 38, 3.7, [], [], 0);
-console.log(Dubai);
-
-let Paris = new SalmonShops('Paris', 11, 38, 2.3, [], [], 0);
-console.log(Paris);
-
-let Lima = new SalmonShops('Lima', 2, 16, 4.6, [],[], 0);
-console.log(Lima);
+//console.log(arrOfObjects);
 
 
-seattle.calcRandomCust();
+getHeaderRow();
+for (let i = 0; i < arrOfObjects.length; i++){
+    arrOfObjects[i].calcRandomCust();
+    arrOfObjects[i].calcRandomCookies();
+    arrOfObjects[i].render();
+}
+
+console.log(arrOfObjects);
+function footRow (){
+    let lastRow = document.createElement('tr');
+    table.appendChild(lastRow);
+    let firstCell = document.createElement('th');
+    lastRow.appendChild(firstCell);
+    firstCell.textContent = 'Totals'
+    
+    let megaTotal = 0;
+
+
+    for(let i = 0 ;i < workingHours.length; i++){
+        let sum = 0;
+        sum = seattle.cookiesPerH[i] + Tokyo.cookiesPerH[i] + Paris.cookiesPerH[i] + Dubai.cookiesPerH[i] + Lima.cookiesPerH[i];
+
+        let td = document.createElement('td');
+        lastRow.appendChild(td);
+        td.textContent = sum;
+        megaTotal = megaTotal + sum;
+    
+    }
+    let totals = document.createElement('th');
+    lastRow.appendChild(totals);
+    totals.textContent= megaTotal;
+} 
+footRow();
+
+
+
+
+
+
+/*seattle.calcRandomCust();
 seattle.calcRandomCookies();
 seattle.render();
 Tokyo.calcRandomCust();
@@ -149,5 +142,11 @@ Paris.calcRandomCookies();
 Paris.render();
 Lima.calcRandomCust();
 Lima.calcRandomCookies();
-Lima.render();
+Lima.render();*/
+
+
+
+
+
+
 
