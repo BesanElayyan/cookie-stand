@@ -1,6 +1,6 @@
 'use strict';
 
-let workingHours = ['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'];
+let hours = ['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'];
 
 
 function randomVal(min, max) {
@@ -28,13 +28,13 @@ function SalmonShops(locName,min,max,avg){
 
  //prototypes
   SalmonShops.prototype.calcRandomCust= function (){
-    for(let i = 0; i < workingHours.length;i++){
+    for(let i = 0; i < hours.length;i++){
         this.custPerHour.push(randomVal(this.min,this.max));
   }  
 }
 
  SalmonShops.prototype.calcRandomCookies= function(){
-    for(let i = 0 ; i < workingHours.length; i++){
+    for(let i = 0 ; i < hours.length; i++){
         this.cookiesPerH.push(this.custPerHour[i] * Math.ceil(this.avg));
         this.total += this.cookiesPerH[i];
 
@@ -49,10 +49,10 @@ function SalmonShops(locName,min,max,avg){
     let emptyCell = document.createElement('th');
     headerRow.appendChild(emptyCell);
 
-    for(let i = 0; i< workingHours.length; i++){
+    for(let i = 0; i< hours.length; i++){
         let th = document.createElement('th');
         headerRow.appendChild(th);
-        th.textContent = workingHours[i];
+        th.textContent = hours[i];
     }
 
     let dailyLoc = document.createElement('th')
@@ -107,7 +107,7 @@ function footRow (){
     let megaTotal = 0;
 
 
-    for(let i = 0 ;i < workingHours.length; i++){
+    for(let i = 0 ;i < hours.length; i++){
         let sum = 0;
         sum = seattle.cookiesPerH[i] + Tokyo.cookiesPerH[i] + Paris.cookiesPerH[i] + Dubai.cookiesPerH[i] + Lima.cookiesPerH[i];
 
@@ -143,10 +143,3 @@ Paris.render();
 Lima.calcRandomCust();
 Lima.calcRandomCookies();
 Lima.render();*/
-
-
-
-
-
-
-
