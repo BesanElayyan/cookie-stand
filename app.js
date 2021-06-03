@@ -128,6 +128,7 @@ footRow();
 
 
 
+
 /*seattle.calcRandomCust();
 seattle.calcRandomCookies();
 seattle.render();
@@ -143,3 +144,38 @@ Paris.render();
 Lima.calcRandomCust();
 Lima.calcRandomCookies();
 Lima.render();*/
+
+
+const branchesForm = document.getElementById('storeBranches');
+branchesForm.addEventListener('submit', handleSubmitting);
+function handleSubmitting(event){
+    event.preventDefault(); 
+    //console.log(event);
+    //console.log(event.target.nameFiled.value);
+
+    
+    let newName = event.target.nameFiled.value;
+    //console.log(newName);
+    let newMin = Number(event.target.minFiled.value);
+    //console.log(newMin);
+    let newMax = Number(event.target.maxFiled.value);
+    //console.log(newMax);
+    let newAvg= Number(event.target.avgFiled.value);
+    //console.log(newAvg);
+    let newBranch = new SalmonShops(newName, newMin, newMax, newAvg);
+    //console.log(newBranch); 
+    if(newMax < newMin){
+        alert('Please, add a right number!');
+        
+    }
+
+    
+    newBranch.calcRandomCust();
+    newBranch.calcRandomCookies();
+    newBranch.render();
+
+    
+
+    
+}
+
