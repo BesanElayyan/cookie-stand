@@ -173,9 +173,6 @@ function handleSubmitting(event){
     newBranch.calcRandomCust();
     newBranch.calcRandomCookies();
     newBranch.render();
-
-    
-
     
 }
 
